@@ -1,0 +1,32 @@
+# https://github.com/tootsuite/mastodon/blob/master/.travis.yml
+machine:
+  environment:
+    LOCAL_DOMAIN: cb6e6126.ngrok.io
+    LOCAL_HTTPS: true
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+    RAILS_ENV: test
+  hosts:
+    cb6e6126.ngrok.io: 127.0.0.1
+  services:
+    - redis
+
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install libav-tools libavcodec-extra-54 x264 libx264-dev libav-tools
+  cache_directories:
+    - ~/.cache/yarn
+    - .bundle/config
+  override:
+    - nvm install
+    - nvm alias default $(cat .nvmrc)
+    - bundle check || bundle install --without development production --retry=3 --jobs=3 --path=vendor/bundle
+    - yarn install
+
+database:
+  override:
+    - bundle exec rails db:create db:migrate
+
+test:
+  override:
+    - bundle exec rspec
+    - npm test

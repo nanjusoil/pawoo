@@ -1,0 +1,21 @@
+- content_for :page_title do
+  = display_name(@account)
+
+= link_to t('admin.accounts.back'), admin_account_path(@account.id),  class: 'button'
+
+- if @statuses.empty?
+  .accounts-grid
+    = render 'accounts/nothing_here'
+- else
+  - @statuses.each do |status|
+    .account-status
+      .activity-stream.activity-stream-headless
+        .entry= render partial: 'stream_entries/simple_status', locals: { status: status, expand_media: false }
+      .account-status__actions
+        = link_to admin_account_status_path(@account.id, status), method: :delete, class: 'icon-button', style: 'font-size: 24px; width: 24px; height: 24px; display: block', title: t('admin.reports.delete'), data: { confirm: t('admin.accounts.are_you_sure') } do
+          = fa_icon 'trash'
+        - unless status.media_attachments.empty?
+          = link_to admin_account_status_path(@account.id, status, status: { sensitive: !status.sensitive }), method: :patch, style: 'color: white; font-size: 11px; width: 11px; height: 11px; margin-top: 15px; display: block;', title: t("admin.reports.nsfw.#{!status.sensitive}") do
+            = t("admin.reports.nsfw.#{!status.sensitive}")
+
+= paginate @statuses

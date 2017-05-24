@@ -1,0 +1,3 @@
+subscriptions_scheduler:
+  cron: '0 4,9 * * *'
+  class: Scheduler::SubscriptionsScheduler

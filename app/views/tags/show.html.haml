@@ -1,0 +1,22 @@
+- content_for :page_title do
+  = "##{@tag.name}"
+
+= link_to root_path, class: 'service-logo' do
+  = image_tag 'service_logo.png'
+
+- if show_landing_strip?
+  = render partial: 'shared/landing_strip_tag', locals: { tag: @tag }
+
+.compact-header
+  %h1= "##{@tag.name}"
+
+- if @statuses.empty?
+  .accounts-grid
+    = render partial: 'accounts/nothing_here'
+- else
+  .activity-stream.h-feed
+    = render partial: 'stream_entries/status', collection: @statuses, as: :status
+
+- if @statuses.size == 20
+  .pagination
+    = link_to safe_join([t('pagination.next'), fa_icon('chevron-right')], ' '), tag_url(@tag, max_id: @statuses.last.id), class: 'next', rel: 'next'

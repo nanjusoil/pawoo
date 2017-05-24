@@ -1,0 +1,9 @@
+ようこそ<%= @resource.email %>さん
+
+以下のリンクをクリックして<%= Setting.site_title %>アカウントのメールアドレスを確認してください
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+また、インスタンスの<%= link_to '利用規約', terms_url %>についてもご確認ください。
+
+<%= @instance %> チーム

@@ -1,0 +1,31 @@
+.landing-strip {
+  background: rgba(darken($color1, 7%), 0.8);
+  color: $color3;
+  font-weight: 400;
+  padding: 14px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+  strong, a {
+    font-weight: 500;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.landing-form {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .button {
+    margin: 0 4px;
+    padding: 0 40px;
+  }
+
+  .signin {
+    background-color: lighten($color1, 26%);
+  }
+}

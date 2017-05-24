@@ -1,0 +1,25 @@
+en:
+  activemodel:
+    attributes:
+      form/account_filter:
+        keyword: Keyword
+        search_type: Type
+      form/account_filter/search_type:
+        ip: IP
+        email: Email
+        name: Name
+  activerecord:
+    attributes:
+      oauth_authentication:
+        provider: Provider
+        uid: User ID
+    errors:
+      models:
+        account:
+          attributes:
+            username:
+              invalid: only letters, numbers and underscores
+        status:
+          attributes:
+            reblog:
+              taken: is already exists

@@ -1,0 +1,25 @@
+ja:
+  activemodel:
+    attributes:
+      form/account_filter:
+        keyword: キーワード
+        search_type: 検索対象
+      form/account_filter/search_type:
+        ip: IP
+        email: Email
+        name: 名前
+  activerecord:
+    attributes:
+      oauth_authentication:
+        provider: プロバイダー
+        uid: ユーザーID
+    errors:
+      models:
+        account:
+          attributes:
+            username:
+              invalid: アルファベット・数値・アンダーバー(_)で入力してください
+        status:
+          attributes:
+            reblog:
+              taken: はすでに他のアカウントと連携済みです

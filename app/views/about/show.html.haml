@@ -1,0 +1,157 @@
+- content_for :page_title do
+  Mastodon (マストドン) hosted by pixiv
+
+- content_for :header_tags do
+  %script#initial-state{:type => 'application/json'}!= json_escape('{"meta": {"appmode": "about"}}')
+  = javascript_include_tag 'application_public', integrity: true, crossorigin: 'anonymous'
+
+- content_for :header_tags do
+  %meta{ property: 'og:site_name', content: site_title }/
+  %meta{ property: 'og:url', content: about_url }/
+  %meta{ property: 'og:type', content: 'website' }/
+  %meta{ property: 'og:title', content: Rails.configuration.x.local_domain }/
+  %meta{ property: 'og:description', content: strip_tags(@instance_presenter.site_description.blank? ? t('about.about_mastodon') : @instance_presenter.site_description) }/
+  %meta{ property: 'og:image', content: asset_url('mastodon_small.png') }/
+  %meta{ property: 'og:image:width', content: '400' }/
+  %meta{ property: 'og:image:height', content: '400' }/
+  %meta{ property: 'twitter:card', content: 'summary' }/
+  %meta{ property: 'twitter:image', content: asset_url('mastodon_small.png') }/
+  %meta{ name: 'viewport', content: 'width=990' }/
+
+.about-cols
+  .about-col.left
+    = image_tag 'service_logo.png', width: 150, style: 'display:block;margin:0 auto 40px'
+
+    .simple_form
+      = render 'registration'
+
+  .about-col.main
+    .about-col-head
+      = image_tag 'about/header.png', width: 535
+      %p
+        ピクシブが運営するマストドンインスタンス「Pawoo」は、文章や画像を投稿して楽しむSNSです。
+        「創作活動や自由なコミュニケーションを楽しめる場」として、どなたにも幅広く使っていただけます。
+
+    .about-col-body.first
+      %p.main ＼ #{number_with_delimiter @instance_presenter.user_count}人が、#{number_with_delimiter @instance_presenter.status_count}回パウってます／
+
+      .simple_form.show_on_wide_display.signup
+        = link_to new_user_registration_path do
+          %button.including-brand Pawooをはじめる
+
+      .simple_form.hide_on_wide_display
+        = render 'registration'
+
+      .separate
+        %span アプリもあります
+
+      .about-col-body-apps
+        .about-col-body-app
+          = link_to 'https://itunes.apple.com/us/app/pawoo/id1229070679' do
+            = image_tag 'about/badge-appstore.png', width: 190
+
+        .about-col-body-app
+          = link_to 'https://play.google.com/store/apps/details?id=jp.pxv.pawoo' do
+            = image_tag 'about/badge-googleplay.png', width: 190
+
+    .about-col-body
+      %p.main ＼ Pawooの特徴 ／
+
+      %p.title 一度に500文字までのテキスト・画像・動画を投稿できる
+
+      = image_tag 'about/submit-form.png', width: '100%'
+
+      %p.title Pawooにはたくさんのユーザーがいて、わいわいしてる場を楽しめる
+      %p
+        ローカルタイムラインを見れば、Pawoo内での会話がすべて流れてくるので、フォローしている人がいなくても使い始めから楽しい！
+
+      %p.title 投稿時に公開範囲を制限できる
+      %p
+        例えば、Pawoo上のユーザーに広く見てもらいたいイラストと、フォロワーのみに見せたいイラストを分けて投稿することができる！
+
+      %p.title Pawooだけの機能「メディアタイムライン」がとっても面白い
+      %p
+        投稿された画像や動画だけが一覧で見れる「メディアタイムライン」機能が追加されています。
+        メディアタイムラインには常に多数のイラストが登場し、クリエイター間での交流も盛んに行われています。
+
+      %p.title pixivアカウントと連携できる
+      %p
+        創作活動が好きなpixivユーザーがもっと気軽に楽しく参加できるよう、pixivアカウントとの連携し、pixivの作品をPawooでシェアできる機能を追加しています。
+
+      .simple_form.signup
+        = link_to new_user_registration_path do
+          %button.including-brand Pawooをはじめる
+
+      %p.main{ style: 'margin-top:40px;' }
+        = link_to t('about.about_this'), about_more_path, style: 'color:white'
+
+    .about-col-body
+      %p.main ＼ マストドン（Mastodon）とは？ ／
+      %p
+        マストドンは、所属するインスタンスを選んでアカウントを登録し、トゥートと呼ばれる投稿を通じてコミュニケーションを楽しむSNSです。
+        オープンソースで公開されているため、誰でも自分のインスタンスを立ち上げることが可能である他、様々なインスタンスにアカウントを持つこともできます。
+        また、インスタンス間を超えたやり取りも可能であるため、様々なコミュニティを介したコミュニケーションが展開されています。
+
+      %video{autoplay: '', loop: '',  src: asset_path('about/demo.mp4'),  poster: asset_path('about/demo.jpg'),  style: 'width:100%;'}
+
+    .about-col-body
+      %p.main ＼ マストドンの特徴 ／
+
+      .features-list
+        .features-list__column
+          %ul.fa-ul
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.chronology'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.public'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.characters'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.gifv'
+        .features-list__column
+          %ul.fa-ul
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.privacy'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.blocks'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.ethics'
+            %li
+              = fa_icon('li check-square')
+              = t 'about.features.api'
+
+      %p まずはローカルタイムラインを眺めて、気になるユーザーをフォローしてみましょう！
+
+    .actions
+      .info
+        = link_to t('about.terms'), terms_path
+        ·
+        = link_to t('about.apps'), 'https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/Apps.md'
+        ·
+        = link_to t('about.source_code'), 'https://github.com/pixiv/mastodon/tree/pawoo'
+        ·
+        = link_to t('about.other_instances'), 'https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/List-of-Mastodon-instances.md'
+
+      = link_to image_tag('logo_pixiv.png', width: 50, style: 'display:block;margin:40px auto'), 'https://www.pixiv.net'
+
+  .about-col.right
+    .about-timeline-container
+      = react_component 'Mastodon', default_props, class: 'app-holder', prerender: false
+
+:javascript
+  userAgent = window.navigator.userAgent.toLowerCase();
+  // MSIE(IE11のみUAにMSIEを含まないのでTridentで検出)
+  isMSIE = /MSIE/i.test(userAgent) || /Trident/i.test(userAgent)
+  if(isMSIE) {
+    alert('お使いのブラウザはサポートされていません。Microsoft Edge、Google Chromeなどをお試しください。');
+  }
+
+  // タイムラインが伸びすぎないようにする
+  $('.about-timeline-container').height($('.about-col.main').height());
